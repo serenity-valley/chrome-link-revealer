@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/*"],
-      "js": ["jquery.min.js", "contentscript.js"],
+      "js": ["contentscript.js"],
       "css": ["style.css"],
       "run_at": "document_end",
       "all_frames": true

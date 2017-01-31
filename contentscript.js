@@ -10,35 +10,41 @@ function buildLinkDisplayContainer() {
   return linkDisplayContainer;
 }
 
-function showLinkDestination(elem) {
-  var linkHrefText = document.createTextNode(elem.attr('href')),
+function showLinkDestination(e) {
+  var linkHrefText = document.createTextNode(e.target.href),
       linkDisplayContainer = buildLinkDisplayContainer();
 
   linkDisplayContainer.appendChild(linkHrefText);
   document.body.appendChild(linkDisplayContainer);
 }
 
-function hideLinkDestination(elem) {
-  $('#link-display-div').remove();
+function hideLinkDestination(e) {
+  var container = document.getElementById('link-display-div');
+  container.parentNode.removeChild(container);
+}
+
+function moveLinkDisplay(e) {
+  var container = document.getElementById('link-display-div');
+
+  container.style.position = 'absolute';
+  container.style.left = (e.pageX + 15) + 'px';
+  container.style.top = (e.pageY + 15) + 'px';
 }
 
 function initListeners() {
-  $('a').hover(
-    function(e) {
-      showLinkDestination($(this));
-    },
-    function(e) {
-      hideLinkDestination($(this));
-    }
-  );
+  var anchors = document.getElementsByTagName('a');
 
-  $(document).on('mousemove', function(e){
-    $('#link-display-div').css({
-        position: 'absolute',
-        left:  e.pageX + 15,
-        top:   e.pageY + 15
-      });
-  });
+  for (var i=0; i<anchors.length;i++) {
+    var anchor = anchors[i];
+
+    if (typeof anchor !== 'object' || typeof anchor.addEventListener === 'undefined') {
+      continue;
+    }
+
+    anchor.addEventListener('mouseover', showLinkDestination);
+    anchor.addEventListener('mouseout', hideLinkDestination);
+    anchor.addEventListener('mousemove', moveLinkDisplay);
+  }
 }
 
 initListeners();
