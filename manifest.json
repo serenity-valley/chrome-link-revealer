@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Chrome link revealer",
-  "description": "Chrome sandbox",
+  "description": "A simple, lightweight extension for showing an anchor's href attribute on hover",
   "version": "1.0",
 
   "browser_action": {
